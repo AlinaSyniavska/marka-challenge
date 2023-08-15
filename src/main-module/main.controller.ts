@@ -1,14 +1,15 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
+import { ApiBadRequestResponse, ApiBody, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
 
 import { MainService } from "./main.service";
-import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { ArrayDto } from "./dto/array.dto";
 
 @ApiTags('Main')
 @Controller('api/main')
 export class MainController {
   constructor(private readonly mainService: MainService) {}
 
-  @Get('/simple_response')
+  @Get('/simpleResponse')
   @ApiOperation({summary: "Return a JSON object with 1 text field 'The challenge accepted!!!'"})
   @ApiOkResponse({
     schema: {
@@ -25,28 +26,13 @@ export class MainController {
     };
   }
 
-/*  @Post()
-  create(@Body() createMainModuleDto: CreateMainModuleDto) {
-    return this.mainModuleService.create(createMainModuleDto);
+  @Post('/sortedArray')
+  @ApiBody({type: ArrayDto})
+  @ApiOperation({summary: "Return a JSON object with an array of 1000 integers sorted in ascending order."})
+  @ApiOkResponse()
+  @ApiBadRequestResponse({description: 'Bad Request'})
+  create(@Body() arrayDto: ArrayDto) {
+    return this.mainService.sortArray(arrayDto);
   }
 
-  @Get()
-  findAll() {
-    return this.mainModuleService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.mainModuleService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMainModuleDto: UpdateMainModuleDto) {
-    return this.mainModuleService.update(+id, updateMainModuleDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mainModuleService.remove(+id);
-  }*/
 }
