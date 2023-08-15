@@ -1,5 +1,6 @@
 import { BadRequestException, HttpException, Injectable } from "@nestjs/common";
 import { ArrayDto } from "./dto/array.dto";
+import { IntegerDto } from "./dto/integer.dto";
 
 @Injectable()
 export class MainService {
@@ -14,4 +15,22 @@ export class MainService {
       throw new BadRequestException();
     }
   }
+
+  async calculateFactorial(data: IntegerDto): Promise<number | HttpException> {
+    try {
+      let answer = 1;
+      if (data.n === 1){
+        return answer;
+      }
+      else if(data.n > 1){
+        for(let i = data.n; i >= 1; i--){
+          answer = answer * i;
+        }
+        return answer;
+      }
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
+
 }
