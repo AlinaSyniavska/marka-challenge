@@ -3,6 +3,7 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ValidationPipe } from "@nestjs/common";
 
 import { AppModule } from './app.module';
+import { DatabaseService } from "./database-module/database.service";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +15,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
+  const databaseService = app.get(DatabaseService);
+  await databaseService.enableShutdownHooks(app)
 
   app.useGlobalPipes(new ValidationPipe());
 

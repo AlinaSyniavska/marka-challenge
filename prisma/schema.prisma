@@ -1,0 +1,19 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  //  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:superuser@localhost:5433/marka-challenge-db?schema=public"
+}
+
+model Products {
+  id                 Int    @id @default(autoincrement()) @db.SmallInt
+  productName        String @db.Text
+  productPrice       Float  @db.Real
+  productDescription String @db.Text
+}
