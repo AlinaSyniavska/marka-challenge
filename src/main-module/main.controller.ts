@@ -1,5 +1,5 @@
-import { Controller, Get, Post, Body, HttpCode } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiBody, ApiOkResponse, ApiOperation, ApiTags } from "@nestjs/swagger";
+import { Controller, Get, Post, Body, HttpCode, Query } from "@nestjs/common";
+import { ApiBadRequestResponse, ApiBody, ApiOkResponse, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 
 import { MainService } from "./main.service";
 import { ArrayDto } from "./dto/array.dto";
@@ -36,6 +36,34 @@ export class MainController {
   @ApiBadRequestResponse({ description: 'Bad Request' })
   sortArray(@Body() arrayDto: ArrayDto) {
     return this.mainService.sortArray(arrayDto);
+  }
+
+  @Get('/data')
+  @ApiOperation({summary: 'Fetch and return data from a SQL database with at least 10,000 records.'})
+  @ApiQuery({name: 'rangeStart', required: false, description: 'Lower price range'})
+  @ApiQuery({name: 'rangeEnd', required: false, description: 'Upper price range'})
+  @ApiOkResponse({
+    schema: {
+      example:
+        [
+          {
+            "id": 1,
+            "productName": "Chicken",
+            "productPrice": 202,
+            "productDescription": "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+          },
+          {
+            "id": 2,
+            "productName": "Shirt",
+            "productPrice": 419,
+            "productDescription": "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+          }
+        ]
+    }
+  })
+  @ApiBadRequestResponse({description: 'Bad Request'})
+  async getData(@Query() params: any) {
+    return this.mainService.getData(params.rangeStart, params.rangeEnd);
   }
 
   @Post('/factorial')
