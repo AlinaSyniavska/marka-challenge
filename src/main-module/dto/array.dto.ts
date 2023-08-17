@@ -1,8 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNumber } from "class-validator";
+import { IsArray, IsNumber } from "class-validator";
 
 export class ArrayDto {
   @IsNumber()
+  @IsArray()
   @ApiProperty({
     description: "An unsorted array of 500 integers provided as a POST request",
     default:  [

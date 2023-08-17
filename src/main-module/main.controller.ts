@@ -34,8 +34,8 @@ export class MainController {
   @ApiOperation({ summary: 'Return a JSON object with an array of 1000 integers sorted in ascending order.' })
   @HttpCode(200)
   @ApiBadRequestResponse({ description: 'Bad Request' })
-  sortArray(@Body() arrayDto: ArrayDto) {
-    return this.mainService.sortArray(arrayDto);
+  sortArray(@Body() array: any) {
+    return this.mainService.sortArray(array);
   }
 
   @Get('/data')

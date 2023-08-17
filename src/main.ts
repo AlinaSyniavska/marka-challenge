@@ -19,8 +19,7 @@ async function bootstrap() {
   const databaseService = app.get(DatabaseService);
   await databaseService.enableShutdownHooks(app)
 
-  // app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
   await app.listen(process.env.PORT || 5000);
 }

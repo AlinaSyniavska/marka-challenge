@@ -14,14 +14,12 @@ export class MainService {
 
   async sortArray(data: ArrayDto): Promise<ArrayDto | HttpException> {
     try {
-      console.log('1');
       data.integers.sort((a, b) => a - b);
 
       return {
         integers: data.integers
       };
     } catch (error) {
-      console.log('2');
       throw new BadRequestException();
     }
   }
