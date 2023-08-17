@@ -139,4 +139,32 @@ export class MainService {
       throw new BadRequestException({ message: error.response, statusCode: error.status });
     }
   }
+
+  async makeApiCalls(): Promise<any | HttpException> {
+    const response: any = {};
+
+    await Promise.allSettled([
+      fetch("https://jsonplaceholder.typicode.com/posts/1")
+        .then((response) => response.json()),
+      fetch("https://jsonplaceholder.typicode.com/users/1")
+        .then((response) => response.json()),
+      fetch("https://no-such-url")
+        .then((response) => response.json()),
+      fetch("https://picsum.photos/500/700")
+        .then((response) => response.url),
+      fetch("https://catfact.ninja/fact")
+        .then((response) => response.json())
+    ])
+      .then(results => {
+        results.forEach((result, index) => {
+          // console.log(result);
+          response[index] = Object.assign(result);
+        });
+      })
+      .catch((err) => console.log(err))
+      .finally(() => console.log(response))
+    ;
+
+    return response;
+  }
 }

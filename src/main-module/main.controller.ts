@@ -121,7 +121,15 @@ export class MainController {
   @ApiOperation({ summary: 'Generate and return a sequence of the first n Fibonacci numbers.' })
   @ApiOkResponse()
   @ApiBadRequestResponse({ description: 'Bad Request' })
-  generateFibonacci(@Query('n', ParseIntPipe) n: number,) {
+  generateFibonacci(@Query('n', ParseIntPipe) n: number) {
     return this.mainService.generateFibonacci(n);
   }
+
+  @Get('/apiCalls')
+  @ApiOperation({summary: 'Simultaneously make five external API calls, wait for all to complete, and return the aggregated data.'})
+  @ApiOkResponse()
+  makeApiCalls() {
+    return this.mainService.makeApiCalls();
+  }
+
 }
