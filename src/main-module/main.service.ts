@@ -14,12 +14,14 @@ export class MainService {
 
   async sortArray(data: ArrayDto): Promise<ArrayDto | HttpException> {
     try {
+      console.log('1');
       data.integers.sort((a, b) => a - b);
 
       return {
         integers: data.integers
       };
     } catch (error) {
+      console.log('2');
       throw new BadRequestException();
     }
   }
@@ -37,8 +39,8 @@ export class MainService {
           end = 1000;
         }
 
-        if (!Number.isInteger(start) || !Number.isInteger(end)){
-          throw new HttpException('Some range is not valid', HttpStatus.BAD_REQUEST);
+        if (!Number.isInteger(start) || !Number.isInteger(end)) {
+          throw new HttpException("Some range is not valid", HttpStatus.BAD_REQUEST);
         }
 
         return this.databaseService.products.findMany({
@@ -55,14 +57,14 @@ export class MainService {
                 }
               }
             ]
-          },
+          }
           // take: 5,
         });
       } else {
         return this.databaseService.products.findMany();
       }
     } catch (error) {
-      throw new BadRequestException({message: error.response, statusCode: error.status});
+      throw new BadRequestException({ message: error.response, statusCode: error.status });
     }
   }
 
@@ -70,7 +72,7 @@ export class MainService {
     try {
 
 
-        return filename;
+      return filename;
 
     } catch (error) {
       // throw new BadRequestException({message: error.response, statusCode: error.status});
@@ -79,19 +81,12 @@ export class MainService {
   }
 
   async calculateFactorial(data: IntegerDto): Promise<number | HttpException> {
-    try {
-      let answer = 1;
-      if (data.n === 1) {
-        return answer;
-      } else if (data.n > 1) {
-        for (let i = data.n; i >= 1; i--) {
-          answer = answer * i;
-        }
-        return answer;
-      }
-    } catch (error) {
-      throw new BadRequestException();
+    let answer: number = 1;
+
+    for (let i = data.n; i >= 1; i--) {
+      answer = answer * i;
     }
+    return answer;
   }
 
   async reverseSentence(data: TextDto): Promise<TextDto | HttpException> {

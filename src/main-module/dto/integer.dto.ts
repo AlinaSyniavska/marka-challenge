@@ -1,8 +1,10 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsInt, Max, Min } from "class-validator";
+import { IsNumber, Max, Min } from "class-validator";
+import { Transform } from 'class-transformer';
 
 export class IntegerDto {
-  @IsInt()
+  @Transform(({ value }) => Number.parseInt(value))
+  @IsNumber()
   @Min(1)
   @Max(20)
   @ApiProperty({

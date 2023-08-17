@@ -74,13 +74,12 @@ export class MainController {
     return this.mainService.readTextFile(filename);
   }
 
-  @Post('/factorial')
-  @ApiBody({ type: IntegerDto })
+  @Get('/factorial')
   @ApiOperation({ summary: 'Calculate the factorial of a given number.' })
-  @HttpCode(200)
+  @ApiOkResponse()
   @ApiBadRequestResponse({ description: 'Bad Request' })
-  calculateFactorial(@Body() integerDto: IntegerDto) {
-    return this.mainService.calculateFactorial(integerDto);
+  calculateFactorial(@Query() param: IntegerDto) {
+    return this.mainService.calculateFactorial(param);
   }
 
   @Post('/reverseSentence')
