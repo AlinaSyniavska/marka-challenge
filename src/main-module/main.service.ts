@@ -68,7 +68,7 @@ export class MainService {
 
   async getByProductId(id: number): Promise<Products | HttpException> {
     const data = await this.databaseService.products.findFirst({
-      where: {id: id}
+      where: { id: id }
     });
 
     if (!data) {
@@ -111,4 +111,32 @@ export class MainService {
     }
   }
 
+  async generateFibonacci(n: number): Promise<number[] | HttpException> {
+    try {
+      if (n > 1024) {
+        throw new HttpException(`An integer n (first n Fibonacci numbers) - ${n} should not cause a server crash`, HttpStatus.BAD_REQUEST);
+      }
+      // 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ...
+      if (n == 0) {
+        return [0];
+      } else if (n == 1) {
+        return [1];
+      } else {
+        let a = 1, b = 0, temp;
+        const result = [0];
+
+        while (n > 1) {
+          temp = a;
+          a = a + b;
+          b = temp;
+          result.push(b);
+          n--;
+        }
+
+        return result;
+      }
+    } catch (error) {
+      throw new BadRequestException({ message: error.response, statusCode: error.status });
+    }
+  }
 }

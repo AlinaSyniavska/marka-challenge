@@ -117,4 +117,11 @@ export class MainController {
     return this.mainService.reverseSentence(textDto);
   }
 
+  @Get('/fibonacci')
+  @ApiOperation({ summary: 'Generate and return a sequence of the first n Fibonacci numbers.' })
+  @ApiOkResponse()
+  @ApiBadRequestResponse({ description: 'Bad Request' })
+  generateFibonacci(@Query('n', ParseIntPipe) n: number,) {
+    return this.mainService.generateFibonacci(n);
+  }
 }
