@@ -24,11 +24,11 @@ export class MainService {
     }
   }
 
-  async getData(rangeStart: any, rangeEnd: any): Promise<Products[] | HttpException> {
+  async getData(rangeStart: string, rangeEnd: string): Promise<Products[] | HttpException> {
     try {
       if (rangeStart || rangeEnd) {
-        let start = Number(rangeStart);
-        let end = Number(rangeEnd);
+        let start: number = Number(rangeStart);
+        let end: number = Number(rangeEnd);
 
         if (!rangeStart) {
           start = 1;
@@ -63,6 +63,18 @@ export class MainService {
       }
     } catch (error) {
       throw new BadRequestException({message: error.response, statusCode: error.status});
+    }
+  }
+
+  async readTextFile(filename: string): Promise<string | HttpException> {
+    try {
+
+
+        return filename;
+
+    } catch (error) {
+      // throw new BadRequestException({message: error.response, statusCode: error.status});
+      throw new BadRequestException();
     }
   }
 

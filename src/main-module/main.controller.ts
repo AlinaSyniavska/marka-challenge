@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, HttpCode, Query } from "@nestjs/common";
+import { Controller, Get, Post, Body, HttpCode, Query, Header } from "@nestjs/common";
 import { ApiBadRequestResponse, ApiBody, ApiOkResponse, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
 
 import { MainService } from "./main.service";
@@ -62,8 +62,16 @@ export class MainController {
     }
   })
   @ApiBadRequestResponse({description: 'Bad Request'})
-  async getData(@Query() params: any) {
-    return this.mainService.getData(params.rangeStart, params.rangeEnd);
+  async getData(@Query('rangeStart') rangeStart: string, @Query('rangeEnd') rangeEnd: string) {
+    return this.mainService.getData(rangeStart, rangeEnd);
+  }
+
+  @Get('readTextFile')
+  @ApiOperation({summary: 'Read and return the content of a text file from Azure blob storage.'})
+  @ApiQuery({name: 'filename', required: false, description: 'File identifier or name'})
+  @Header('Content-Type','text/html')
+  async readTextFile(@Query('filename') filename){
+    return this.mainService.readTextFile(filename);
   }
 
   @Post('/factorial')
