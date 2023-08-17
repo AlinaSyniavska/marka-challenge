@@ -6,12 +6,13 @@ import { AppService } from './app.service';
 import { MainModule } from "./main-module/main.module";
 import { DatabaseModule } from "./database-module/database.module";
 import { DatabaseService } from "./database-module/database.service";
+import { AzureBlobStorageModule } from "./azure-blob-storage-module/azure-blob-storage.module";
 
 @Module({
   imports: [ConfigModule.forRoot({
     envFilePath: `.env.${process.env.NODE_ENV}`
   }),
-    MainModule, DatabaseModule],
+    MainModule, DatabaseModule, AzureBlobStorageModule],
   controllers: [AppController],
   providers: [AppService, DatabaseService],
 })
