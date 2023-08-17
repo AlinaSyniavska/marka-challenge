@@ -1,5 +1,13 @@
-import { Controller, Get, Post, Body, HttpCode, Query, Header } from "@nestjs/common";
-import { ApiBadRequestResponse, ApiBody, ApiOkResponse, ApiOperation, ApiQuery, ApiTags } from "@nestjs/swagger";
+import { Controller, Get, Post, Body, HttpCode, Query, Header, Param, ParseIntPipe } from "@nestjs/common";
+import {
+  ApiBadRequestResponse,
+  ApiBody, ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiParam,
+  ApiQuery,
+  ApiTags
+} from "@nestjs/swagger";
 
 import { MainService } from "./main.service";
 import { ArrayDto } from "./dto/array.dto";
@@ -64,6 +72,24 @@ export class MainController {
   @ApiBadRequestResponse({description: 'Bad Request'})
   async getData(@Query('rangeStart') rangeStart: string, @Query('rangeEnd') rangeEnd: string) {
     return this.mainService.getData(rangeStart, rangeEnd);
+  }
+
+  @Get('/data/:id')
+  @ApiOperation({summary: "Fetch and return data from a SQL database by ID."})
+  @ApiParam({name: 'id'})
+  @ApiOkResponse({
+    schema: {
+      example: {
+        "id": 1,
+        "productName": "Chicken",
+        "productPrice": 202,
+        "productDescription": "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+      },
+    }
+  })
+  @ApiNotFoundResponse({description: 'Not Found'})
+  getByProductId(@Param('id', ParseIntPipe) id: number) {
+    return this.mainService.getByProductId(id);
   }
 
   @Get('readTextFile')

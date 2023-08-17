@@ -1,4 +1,4 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
 import { DatabaseService } from "../database-module/database.service";
 import { Products } from "@prisma/client";
 
@@ -64,6 +64,18 @@ export class MainService {
     } catch (error) {
       throw new BadRequestException({ message: error.response, statusCode: error.status });
     }
+  }
+
+  async getByProductId(id: number): Promise<Products | HttpException> {
+    const data = await this.databaseService.products.findFirst({
+      where: {id: id}
+    });
+
+    if (!data) {
+      throw new NotFoundException();
+    }
+
+    return data;
   }
 
   async readTextFile(filename: string): Promise<string | HttpException> {
