@@ -5,12 +5,15 @@ import { Products } from "@prisma/client";
 import { ArrayDto } from "./dto/array.dto";
 import { IntegerDto } from "./dto/integer.dto";
 import { TextDto } from "./dto/text.dto";
+import { AzureBlobStorageService } from "../azure-blob-storage-module/azure-blob-storage.service";
 
 @Injectable()
 export class MainService {
 
-  constructor(private databaseService: DatabaseService) {
-  }
+  constructor(
+    private databaseService: DatabaseService,
+    private storageService: AzureBlobStorageService,
+    ) {}
 
   async sortArray(data: ArrayDto): Promise<ArrayDto | HttpException> {
     try {
@@ -80,7 +83,7 @@ export class MainService {
 
   async readTextFile(filename: string): Promise<string | HttpException> {
     try {
-
+      // const file = await this.storageService.getFileStream(filename);
 
       return filename;
 
