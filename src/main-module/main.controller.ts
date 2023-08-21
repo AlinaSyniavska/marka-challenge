@@ -20,7 +20,7 @@ export class MainController {
   constructor(private readonly mainService: MainService) {
   }
 
-  @Get('/simpleResponse')
+  @Get('/challenge')
   @ApiOperation({ summary: 'Return a JSON object with 1 text field \'The challenge accepted!!!\'' })
   @ApiOkResponse( {
     schema: {
@@ -46,7 +46,7 @@ export class MainController {
     return this.mainService.sortArray(array);
   }
 
-  @Get('/data')
+  @Get('/products')
   @ApiOperation({summary: 'Fetch and return data from a SQL database with at least 10,000 records.'})
   @ApiQuery({name: 'rangeStart', required: false, description: 'Lower price range'})
   @ApiQuery({name: 'rangeEnd', required: false, description: 'Upper price range'})
@@ -74,7 +74,7 @@ export class MainController {
     return this.mainService.getData(rangeStart, rangeEnd);
   }
 
-  @Get('/data/:id')
+  @Get('/products/:id')
   @ApiOperation({summary: "Fetch and return data from a SQL database by ID."})
   @ApiParam({name: 'id'})
   @ApiOkResponse({
@@ -107,8 +107,8 @@ export class MainController {
   calculateFactorial(@Query() param: IntegerDto) {
     return this.mainService.calculateFactorial(param);
   }
-
-  @Post('/reverseSentence')
+//-------------------------------------
+  @Post('/reverseWords')
   @ApiBody({ type: TextDto })
   @ApiOperation({ summary: 'Return a string where every word of an input sentence is reversed but the sentence order remains the same.' })
   @HttpCode(200)
@@ -117,7 +117,7 @@ export class MainController {
     return this.mainService.reverseSentence(textDto);
   }
 
-  @Get('/fibonacci')
+  @Get('/fibonacciSequence')
   @ApiOperation({ summary: 'Generate and return a sequence of the first n Fibonacci numbers.' })
   @ApiOkResponse()
   @ApiBadRequestResponse({ description: 'Bad Request' })

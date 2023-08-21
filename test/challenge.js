@@ -7,11 +7,10 @@ export const options = {
 }
 
 export default () => {
-  for (let id = 1; id <= 100; id++) {
-    http.get(`https://wa-alina.azurewebsites.net/api/main/data/${id}`);
-  }
-
+  const res = http.get('https://wa-alina.azurewebsites.net/api/main/challenge');
   sleep(1)
 }
 
-// http_reqs......................: 1200   32.766974/s
+// http_reqs......................: 84    2.756592/s
+
+// "test:demo": "npm run build && k6 run dist/tests/reqres.cjs -a localhost:6566"
