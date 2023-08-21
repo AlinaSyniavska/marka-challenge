@@ -34,7 +34,7 @@ export class MainService {
         let end: number = Number(rangeEnd);
 
         if (!rangeStart) {
-          start = 1;
+          start = 0;
         }
         if (!rangeEnd) {
           end = 1000;

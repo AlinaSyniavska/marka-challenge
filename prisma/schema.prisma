@@ -7,8 +7,8 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  //  url      = env("DATABASE_URL")
-  url      = "postgresql://postgres:superuser@localhost:5433/marka-challenge-db?schema=public"
+//  url      = "postgresql://postgres:superuser@localhost:5433/marka-challenge-db?schema=public"
+  url      = "postgresql://markauser@posgresqlperformanceserver:Performance123@posgresqlperformanceserver.postgres.database.azure.com:5432/postgres?schema=public"
 }
 
 model Products {

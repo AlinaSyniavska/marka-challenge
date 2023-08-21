@@ -14,12 +14,11 @@ async function main() {
   const fakerRounds = 10000;
   dotenv.config();
   console.log("Seeding...");
-/// --------- Users ---------------
+
   for (let i = 0; i < fakerRounds; i++) {
     await prisma.products.create({ data: fakerProduct() });
   }
 }
-
 
 main()
   .catch((e) => console.error(e))
