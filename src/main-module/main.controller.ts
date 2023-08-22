@@ -107,7 +107,7 @@ export class MainController {
   calculateFactorial(@Query() param: IntegerDto) {
     return this.mainService.calculateFactorial(param);
   }
-//-------------------------------------
+
   @Post('/reverseWords')
   @ApiBody({ type: TextDto })
   @ApiOperation({ summary: 'Return a string where every word of an input sentence is reversed but the sentence order remains the same.' })
