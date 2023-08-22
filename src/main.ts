@@ -12,11 +12,12 @@ async function bootstrap() {
 
   /* Websockets */
   const configService = app.get(ConfigService);
-  const clientPort = parseInt(configService.get("CLIENT_PORT"));
+  const clientPort = parseInt(configService.get('CLIENT_PORT'));
 
   app.enableCors({
     origin: [
       `http://localhost:${clientPort}`,
+      'https://wa-alina.azurewebsites.net/',
       new RegExp(`/^http:\/\/192\.168\.1\.([1-9]|[1-9]\d):${clientPort}$/`)
     ]
   });
