@@ -81,14 +81,10 @@ export class MainService {
     return data;
   }
 
-  async readTextFile(filename: string): Promise<string | HttpException> {
+  async readTextFile(filename: string = 'azureText.txt'): Promise<any | HttpException> {
     try {
-      // const file = await this.storageService.getFileStream(filename);
-
-      return filename;
-
+      return  this.storageService.getFileStream(filename);
     } catch (error) {
-      // throw new BadRequestException({message: error.response, statusCode: error.status});
       throw new BadRequestException();
     }
   }

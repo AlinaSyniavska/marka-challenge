@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, HttpCode, Query, Header, Param, ParseIntPipe } from "@nestjs/common";
+import { Controller, Get, Post, Body, HttpCode, Query, Header, Param, ParseIntPipe, Res } from "@nestjs/common";
 import {
   ApiBadRequestResponse,
   ApiBody, ApiNotFoundResponse,
@@ -96,8 +96,9 @@ export class MainController {
   @ApiOperation({summary: 'Read and return the content of a text file from Azure blob storage.'})
   @ApiQuery({name: 'filename', required: false, description: 'File identifier or name'})
   @Header('Content-Type','text/html')
-  async readTextFile(@Query('filename') filename){
-    return this.mainService.readTextFile(filename);
+  async readTextFile(@Res() res, @Query('filename') filename): Promise<string>{
+    const file = await this.mainService.readTextFile(filename);
+    return file.pipe(res);
   }
 
   @Get('/factorial')

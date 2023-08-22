@@ -3,12 +3,13 @@ import { BlobServiceClient, BlockBlobClient } from "@azure/storage-blob";
 
 @Injectable()
 export class AzureBlobStorageService {
-  azureConnection = 'DefaultEndpointsProtocol=https;AccountName=naveenazurestore;AccountKey=NLNxbk2ElnaMaUucTLt1zQDU1eOznjYUmCaiIeJB6O+934iedXSmss+r5gDePmZE6y99X8zZ8AItA==;EndpointSuffix=core.windows.net';
-  containerName = 'someContainer';
+  azureConnection = process.env.AZURE_CONNECTION || 'DefaultEndpointsProtocol=https;AccountName=saperformanceapp;AccountKey=pLypAvaUH7nOmAFHleXv8LS/aYGW6vlLDmpyhBYPDiCANPOR9PIA8dBQQXYtofNxnUqZzu3w6c+Z+ASto0bTaQ==;EndpointSuffix=core.windows.net';
+  azureContainerName = process.env.AZURE_CONTAINER_NAME || 'documents';
+  // azureText.txt
 
   getBlobClient(fileName:string):BlockBlobClient{
     const blobClientService = BlobServiceClient.fromConnectionString(this.azureConnection);
-    const containerClient = blobClientService.getContainerClient(this.containerName);
+    const containerClient = blobClientService.getContainerClient(this.azureContainerName);
     const blobClient = containerClient.getBlockBlobClient(fileName);
     return blobClient;
   }
