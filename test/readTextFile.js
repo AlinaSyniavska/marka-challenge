@@ -18,5 +18,6 @@ export default function () {
   sleep(1);
 }
 
-// http_reqs......................: 84     2.752175/s
+// http_reqs......................: 84     2.712346/s
+
 

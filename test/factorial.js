@@ -22,4 +22,5 @@ export default function () {
   sleep(1);
 }
 
-// http_reqs......................: 84      2.747491/s
+// iterations.....................: 84      2.755833/s
+

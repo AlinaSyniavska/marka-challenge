@@ -11,6 +11,6 @@ export default () => {
   sleep(1)
 }
 
-// http_reqs......................: 84    2.756592/s
+// http_reqs......................: 84    2.764696/s
 
 // "test:demo": "npm run build && k6 run dist/tests/reqres.cjs -a localhost:6566"

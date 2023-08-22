@@ -12,11 +12,12 @@ export default () => {
   });
 
   const res = http.post('https://wa-alina.azurewebsites.net/api/main/reverseWords', postData);
-  // const res = http.post('http://localhost:5000/api/main/reverseWords', postData);
 
   sleep(1)
 }
 
-// http_reqs..................: 90      2.961785/s
+// http_reqs..................: 84      2.723459/s
+
+
 
 
