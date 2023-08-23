@@ -4,7 +4,7 @@ import { check, sleep } from "k6";
 
 export const options = {
   vus: 3,
-  duration: '30s',
+  duration: '2m',
 }
 
 export default function () {

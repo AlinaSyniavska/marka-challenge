@@ -4,7 +4,7 @@ const namespace = 'marka-challenge'; // choose your namespace
 
 export const options = {
   vus: 3,
-  duration: "30s"
+  duration: "2m"
 };
 
 export default function () {
