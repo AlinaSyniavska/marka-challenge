@@ -161,7 +161,8 @@ export class MainService {
         });
       })
       .catch((err) => console.log(err))
-      .finally(() => console.log(response))
+      // .finally(() => console.log(response))
+      .finally()
     ;
 
     return response;

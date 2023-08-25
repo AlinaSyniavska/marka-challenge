@@ -1,10 +1,10 @@
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ValidationPipe } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 
 import { AppModule } from "./app.module";
 import { DatabaseService } from "./database-module/database.service";
-import { ConfigService } from "@nestjs/config";
 import { SocketIOAdapter } from "./socket-io-adapter";
 
 async function bootstrap() {
