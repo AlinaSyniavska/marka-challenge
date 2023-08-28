@@ -4,7 +4,7 @@ import { check, sleep } from "k6";
 
 export const options = {
   vus: 3,
-  duration: '2m',
+  duration: '5m',
 }
 
 export default function () {
@@ -14,6 +14,7 @@ export default function () {
 
   // https://wa-alina.azurewebsites.net/api/main/factorial?n=20
   const res = http.get(`${'https://wa-alina.azurewebsites.net/api/main/factorial'}?${searchParams.toString()}`);
+  // const res = http.get(`${'http://localhost:5000/api/main/factorial'}?${searchParams.toString()}`);
 
   check(res, {
     'status is 200': () => res.status === 200,

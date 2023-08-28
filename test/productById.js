@@ -13,6 +13,7 @@ export default () => {
 
   const id = 10;
   http.get(`https://wa-alina.azurewebsites.net/api/main/products/${id}`);
+  // http.get(`http://localhost:5000/api/main/products/${id}`);
 
   sleep(1);
 }
