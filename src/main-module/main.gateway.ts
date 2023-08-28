@@ -9,7 +9,7 @@ import {
 } from "@nestjs/websockets";
 import { Logger, UseInterceptors } from "@nestjs/common";
 import { Namespace, Server, Socket } from "socket.io";
-import { CacheInterceptor, CacheKey } from "@nestjs/cache-manager";
+import { CacheInterceptor } from "@nestjs/cache-manager";
 
 interface IWebSocketPayload {
   data: string,
@@ -49,7 +49,7 @@ export class MainGateway
     this.logger.debug(`Number of connected sockets: ${sockets.size}`);
   }
 
-  @CacheKey('sendMessage')
+  // @CacheKey('sendMessage')
   @UseInterceptors(CacheInterceptor)
   @SubscribeMessage('sendMessage')
   async handleSendMessage(@ConnectedSocket() client: Socket, @MessageBody() payload: IWebSocketPayload): Promise<void> {
