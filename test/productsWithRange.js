@@ -4,12 +4,13 @@ import { sleep } from 'k6';
 
 export const options = {
   vus: 3,
-  duration: '2m',
+  duration: '5m',
 }
 
 export default () => {
   // https://wa-alina.azurewebsites.net/api/main/products?rangeStart=10&rangeEnd=100
-  const url = new URL('https://wa-alina.azurewebsites.net/api/main/products');
+  // const url = new URL('https://wa-alina.azurewebsites.net/api/main/products');
+  const url = new URL('http://localhost:5000/api/main/products');
 
   url.searchParams.append('rangeStart', '10');
   url.searchParams.append('rangeEnd', '100');

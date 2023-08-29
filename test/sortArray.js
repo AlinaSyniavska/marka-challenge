@@ -3,7 +3,7 @@ import http  from 'k6/http';
 
 export const options = {
   vus: 3,
-  duration: '2m',
+  duration: '5m',
 }
 
 export default () => {
@@ -42,7 +42,8 @@ export default () => {
     ]
   });
 
-  const res = http.post('https://wa-alina.azurewebsites.net/api/main/sortArray', postData);
+  // const res = http.post('https://wa-alina.azurewebsites.net/api/main/sortArray', postData);
+  const res = http.post('http://localhost:5000/api/main/sortArray', postData);
 
   check(res, {
     'status is 200': () => res.status === 200,
