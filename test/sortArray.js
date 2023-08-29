@@ -42,8 +42,8 @@ export default () => {
     ]
   });
 
-  const res = http.post('https://wa-alina.azurewebsites.net/api/main/sortArray', postData);
-  // const res = http.post('http://localhost:5000/api/main/sortArray', postData);
+  // const res = http.post('https://wa-alina.azurewebsites.net/api/main/sortArray', postData);
+  const res = http.post('http://localhost:5000/api/main/sortArray', postData);
 
   check(res, {
     'status is 200': () => res.status === 200,
