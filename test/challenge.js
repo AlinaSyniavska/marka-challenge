@@ -3,7 +3,7 @@ import { sleep } from 'k6';
 
 export const options = {
   vus: 3, // Key for Smoke test. Keep it at 2, 3, max 5 VUs
-  duration: '5m', // This can be shorter or just a few iterations
+  duration: '2m', // This can be shorter or just a few iterations
 }
 
 export default () => {

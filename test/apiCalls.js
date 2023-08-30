@@ -7,7 +7,8 @@ export const options = {
 }
 
 export default () => {
-  const res = http.get('https://wa-alina.azurewebsites.net/api/main/apiCalls');
+  // const res = http.get('https://wa-alina.azurewebsites.net/api/main/apiCalls');
+  const res = http.get('http://localhost:5000/api/main/apiCalls');
   sleep(1)
 }
 

@@ -8,7 +8,8 @@ export const options = {
 };
 
 export default function () {
-  const url = `ws://wa-alina.azurewebsites.net/${namespace}/`;
+  // const url = `ws://wa-alina.azurewebsites.net/${namespace}/`;
+  const url = `ws://127.0.0.1:5000/${namespace}/`;
 
   const res = ws.connect(url, null, function (socket) {
     socket.on('open', function open() {

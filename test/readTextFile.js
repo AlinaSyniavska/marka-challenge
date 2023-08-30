@@ -13,7 +13,8 @@ export default function () {
   ]);
 
   // https://wa-alina.azurewebsites.net/api/main/readTextFile?filename=azureText.txt
-  const res = http.get(`${'https://wa-alina.azurewebsites.net/api/main/readTextFile'}?${searchParams.toString()}`);
+  // const res = http.get(`${'https://wa-alina.azurewebsites.net/api/main/readTextFile'}?${searchParams.toString()}`);
+  const res = http.get(`${'http://localhost:5000/api/main/readTextFile'}?${searchParams.toString()}`);
 
   sleep(1);
 }
