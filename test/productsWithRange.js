@@ -9,7 +9,8 @@ export const options = {
 
 export default () => {
   // https://wa-alina.azurewebsites.net/api/main/products?rangeStart=10&rangeEnd=100
-  const url = new URL('https://wa-alina.azurewebsites.net/api/main/products');
+  // const url = new URL('https://wa-alina.azurewebsites.net/api/main/products');
+  const url = new URL('http://localhost:5000/api/main/products');
 
   url.searchParams.append('rangeStart', '10');
   url.searchParams.append('rangeEnd', '100');
