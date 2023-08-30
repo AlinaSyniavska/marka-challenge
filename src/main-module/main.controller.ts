@@ -1,4 +1,15 @@
-import { Controller, Get, Post, Body, HttpCode, Query, Header, Param, ParseIntPipe, Res } from "@nestjs/common";
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  HttpCode,
+  Query,
+  Header,
+  Param,
+  ParseIntPipe,
+  Res,
+} from "@nestjs/common";
 import {
   ApiBadRequestResponse,
   ApiBody, ApiNotFoundResponse,
@@ -8,6 +19,7 @@ import {
   ApiQuery,
   ApiTags
 } from "@nestjs/swagger";
+import { FastifyReply } from 'fastify';
 
 import { MainService } from "./main.service";
 import { ArrayDto } from "./dto/array.dto";
@@ -96,9 +108,11 @@ export class MainController {
   @ApiOperation({summary: 'Read and return the content of a text file from Azure blob storage.'})
   @ApiQuery({name: 'filename', required: false, description: 'File identifier or name'})
   @Header('Content-Type','text/html')
-  async readTextFile(@Res() res, @Query('filename') filename): Promise<string>{
+  // async readTextFile(@Res() res, @Query('filename') filename): Promise<string>{
+  async readTextFile(@Res() res: FastifyReply, @Query('filename') filename): Promise<string>{
     const file = await this.mainService.readTextFile(filename);
-    return file.pipe(res);
+    // return file.pipe(res);
+    return file.pipe(res.raw);
   }
 
   @Get('/factorial')

@@ -1,14 +1,19 @@
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { ValidationPipe } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { FastifyAdapter, NestFastifyApplication, } from '@nestjs/platform-fastify';
 
 import { AppModule } from "./app.module";
 import { DatabaseService } from "./database-module/database.service";
-import { ConfigService } from "@nestjs/config";
 import { SocketIOAdapter } from "./socket-io-adapter";
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestFastifyApplication>(
+    AppModule,
+    new FastifyAdapter()
+  );
 
   /* Websockets */
   const configService = app.get(ConfigService);
@@ -18,7 +23,6 @@ async function bootstrap() {
     origin: [
       `http://localhost:${clientPort}`,
       'https://wa-alina.azurewebsites.net/',
-      new RegExp(`/^http:\/\/192\.168\.1\.([1-9]|[1-9]\d):${clientPort}$/`)
     ]
   });
   app.useWebSocketAdapter(new SocketIOAdapter(app, configService));
@@ -37,7 +41,8 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true, transform: true }));
 
-  await app.listen(process.env.PORT || 5000);
+  // await app.listen(process.env.PORT || 5000);
+  await app.listen(process.env.PORT || 5000, '0.0.0.0');
 }
 
 bootstrap();

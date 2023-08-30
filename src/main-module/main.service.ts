@@ -12,8 +12,9 @@ export class MainService {
 
   constructor(
     private databaseService: DatabaseService,
-    private storageService: AzureBlobStorageService,
-    ) {}
+    private storageService: AzureBlobStorageService
+  ) {
+  }
 
   async sortArray(data: ArrayDto): Promise<ArrayDto | HttpException> {
     try {
@@ -81,9 +82,9 @@ export class MainService {
     return data;
   }
 
-  async readTextFile(filename: string = 'azureText.txt'): Promise<any | HttpException> {
+  async readTextFile(filename: string = "azureText.txt"): Promise<any | HttpException> {
     try {
-      return  this.storageService.getFileStream(filename);
+      return this.storageService.getFileStream(filename);
     } catch (error) {
       throw new BadRequestException();
     }
@@ -161,7 +162,8 @@ export class MainService {
         });
       })
       .catch((err) => console.log(err))
-      .finally(() => console.log(response))
+      // .finally(() => console.log(response))
+      .finally()
     ;
 
     return response;

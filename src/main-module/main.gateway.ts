@@ -7,8 +7,9 @@ import {
   SubscribeMessage, WebSocketGateway,
   WebSocketServer
 } from "@nestjs/websockets";
-import { Logger } from "@nestjs/common";
+import { Logger, UseInterceptors } from "@nestjs/common";
 import { Namespace, Server, Socket } from "socket.io";
+import { CacheInterceptor } from "@nestjs/cache-manager";
 
 interface IWebSocketPayload {
   data: string,
@@ -48,6 +49,8 @@ export class MainGateway
     this.logger.debug(`Number of connected sockets: ${sockets.size}`);
   }
 
+  // @CacheKey('sendMessage')
+  @UseInterceptors(CacheInterceptor)
   @SubscribeMessage('sendMessage')
   async handleSendMessage(@ConnectedSocket() client: Socket, @MessageBody() payload: IWebSocketPayload): Promise<void> {
     console.log(payload.data);
