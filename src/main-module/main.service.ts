@@ -1,6 +1,8 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, HttpException, HttpStatus, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { DatabaseService } from "../database-module/database.service";
 import { Products } from "@prisma/client";
+import { CACHE_MANAGER } from "@nestjs/cache-manager";
+import { Cache } from "cache-manager";
 
 import { ArrayDto } from "./dto/array.dto";
 import { IntegerDto } from "./dto/integer.dto";
@@ -12,7 +14,8 @@ export class MainService {
 
   constructor(
     private databaseService: DatabaseService,
-    private storageService: AzureBlobStorageService
+    private storageService: AzureBlobStorageService,
+    @Inject(CACHE_MANAGER) private cacheService: Cache
   ) {
   }
 
@@ -71,6 +74,28 @@ export class MainService {
   }
 
   async getByProductId(id: number): Promise<Products | HttpException> {
+    /*    // check if data is in cache:
+        const cachedData = await this.cacheService.get<Products>(
+          id.toString()
+        );
+        if (cachedData) {
+          console.log(`Getting data from cache! - ${cachedData}`);
+          return cachedData;
+        }
+
+        // if not, call API and set the cache:
+        const data = await this.databaseService.products.findFirst({
+          where: { id: id }
+        });
+
+        if (!data) {
+          throw new NotFoundException();
+        }
+
+        await this.cacheService.set(id.toString(), data);
+
+        return data;*/
+
     const data = await this.databaseService.products.findFirst({
       where: { id: id }
     });
