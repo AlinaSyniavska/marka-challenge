@@ -12,7 +12,7 @@ import { AzureBlobStorageModule } from "./azure-blob-storage-module/azure-blob-s
 
 @Module({
   imports: [ConfigModule.forRoot({
-    envFilePath: `.env.${process.env.NODE_ENV}`
+    envFilePath: '.env'
   }),
     MainModule, DatabaseModule, AzureBlobStorageModule,
     CacheModule.register({

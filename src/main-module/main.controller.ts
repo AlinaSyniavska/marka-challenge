@@ -8,7 +8,7 @@ import {
   Header,
   Param,
   ParseIntPipe,
-  Res, UseInterceptors
+  Res,
 } from "@nestjs/common";
 import {
   ApiBadRequestResponse,
@@ -19,7 +19,6 @@ import {
   ApiQuery,
   ApiTags
 } from "@nestjs/swagger";
-import { CacheInterceptor, CacheKey } from "@nestjs/cache-manager";
 
 import { MainService } from "./main.service";
 import { ArrayDto } from "./dto/array.dto";
@@ -86,8 +85,6 @@ export class MainController {
     return this.mainService.getData(rangeStart, rangeEnd);
   }
 
-  // @UseInterceptors(CacheInterceptor)
-  // @CacheKey('product-id-key')
   @Get('/products/:id')
   @ApiOperation({summary: "Fetch and return data from a SQL database by ID."})
   @ApiParam({name: 'id'})
@@ -111,10 +108,8 @@ export class MainController {
   @ApiQuery({name: 'filename', required: false, description: 'File identifier or name'})
   @Header('Content-Type','text/html')
   async readTextFile(@Res() res, @Query('filename') filename): Promise<string>{
-  // async readTextFile(@Res() res: FastifyReply, @Query('filename') filename): Promise<string>{
     const file = await this.mainService.readTextFile(filename);
     return file.pipe(res);
-    // return file.pipe(res.raw);
   }
 
   @Get('/factorial')
