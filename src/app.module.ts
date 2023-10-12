@@ -10,6 +10,13 @@ import { DatabaseModule } from "./database-module/database.module";
 import { DatabaseService } from "./database-module/database.service";
 import { AzureBlobStorageModule } from "./azure-blob-storage-module/azure-blob-storage.module";
 
+// bun run start
+
+
+// bun run build
+// bun run start
+// bun dist/src/main.js
+
 @Module({
   imports: [ConfigModule.forRoot({
     envFilePath: '.env'
