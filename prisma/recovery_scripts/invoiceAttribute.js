@@ -22,7 +22,6 @@ let csvStream = fastcsv
       connectionString: databaseUrl,
     })
 
-
     const query =
       "INSERT INTO public.\"InvoiceAttribute\" (attribute_id, attribute_name) VALUES ($1, $2)";
 

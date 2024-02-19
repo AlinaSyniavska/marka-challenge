@@ -5,13 +5,7 @@ import * as fastcsv from 'fast-csv';
 
 const { Pool } = pkg;
 
-/*console.log('**********************');
-console.log("Present working directory: " + process.cwd());
-process.chdir('../recovery_tables');
-console.log("Updated working directory is: " + process.cwd());
-console.log('**********************');*/
-
-let stream = createReadStream(join(process.cwd(), 'prisma', 'recovery_tables', 'documentType.csv'));
+let stream = createReadStream(join(process.cwd(), 'prisma', 'recovery_tables', 'statusType.csv'));
 let csvData = [];
 let csvStream = fastcsv
   .parse()
@@ -29,7 +23,7 @@ let csvStream = fastcsv
     })
 
     const query =
-      "INSERT INTO public.\"DocumentType\" (doctype_id, doctype_name) VALUES ($1, $2)";
+      "INSERT INTO public.\"StatusType\" (type_id, type_name) VALUES ($1, $2)";
 
     pool.connect((err, client, done) => {
       if (err) throw err;

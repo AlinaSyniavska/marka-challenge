@@ -5,7 +5,7 @@ import * as fastcsv from 'fast-csv';
 
 const {Pool} = pkg;
 
-let stream = createReadStream(join(process.cwd(), 'prisma', 'recovery_tables', 'fields.csv'));
+let stream = createReadStream(join(process.cwd(), 'prisma', 'recovery_tables', 'settings.csv'));
 let csvData = [];
 let csvStream = fastcsv
     .parse()
@@ -23,7 +23,7 @@ let csvStream = fastcsv
         })
 
         const query =
-            "INSERT INTO public.\"Fields\" (field_id, field_name, ref_attribute_id) VALUES ($1, $2, $3)";
+            "INSERT INTO public.\"Settings\" (settings_id, ref_doctype_id, ref_field_id, azure_field, google_field, ref_version_id) VALUES ($1, $2, $3, $4, $5, $6)";
 
         pool.connect((err, client, done) => {
             if (err) throw err;

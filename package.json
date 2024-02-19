@@ -21,8 +21,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "db:migrate": "npx prisma migrate dev --name init",
-    "db:recovery": "concurrently \"node prisma/recovery_scripts/documentType.js\" \"node prisma/recovery_scripts/invoiceAttribute.js\" \"node prisma/recovery_scripts/fields.js\" ",
-    "db:rec": "node prisma/recovery_scripts/documentType.js"
+    "db:recovery": "concurrently \"node prisma/recovery_scripts/documentType.js\" \"node prisma/recovery_scripts/invoiceAttribute.js\" \"node prisma/recovery_scripts/fields.js\" \"node prisma/recovery_scripts/googleProcessorVersion.js\" \"node prisma/recovery_scripts/invoiceParser.js\" \"node prisma/recovery_scripts/settings.js\" \"node prisma/recovery_scripts/statusType.js\" "
   },
   "dependencies": {
     "@azure/storage-blob": "^12.15.0",
