@@ -32,7 +32,7 @@ let csvStream = fastcsv
     const query =
       "INSERT INTO public.\"DocumentType\" (doctype_id, doctype_name) VALUES ($1, $2)";
 
-    pool.connect((err, client) => {
+    pool.connect((err, client, done) => {
       if (err) throw err;
 
       try {
@@ -45,11 +45,14 @@ let csvStream = fastcsv
             }
           });
         });
+
+
       } finally {
         console.log('Done!');
-        // process.exit();
+        done();
       }
     });
+
   });
 
 stream.pipe(csvStream);

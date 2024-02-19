@@ -26,7 +26,7 @@ let csvStream = fastcsv
         const query =
             "INSERT INTO public.\"Fields\" (field_id, field_name, ref_attribute_id) VALUES ($1, $2, $3)";
 
-        pool.connect((err, client) => {
+        pool.connect((err, client, done) => {
             if (err) throw err;
 
             try {
@@ -41,6 +41,7 @@ let csvStream = fastcsv
                 });
             } finally {
                 console.log('Done!');
+                done();
             }
         });
     });
