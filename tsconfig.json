@@ -19,6 +19,6 @@
     "noFallthroughCasesInSwitch": false,
 
     // add Bun type definitions
-    "types": ["bun-types"]
+//    "types": ["bun-types"]
   }
 }
