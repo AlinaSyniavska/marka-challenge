@@ -1,3 +1,24 @@
+// // This is your Prisma schema file,
+// // learn more about it in the docs: https://pris.ly/d/prisma-schema
+//
+// generator client {
+//   provider = "prisma-client-js"
+//   // only for Bun
+//   binaryTargets = ["native", "debian-openssl-3.0.x"]
+// }
+//
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+//
+// model Products {
+//   id                 Int    @id @default(autoincrement()) @db.SmallInt
+//   productName        String @db.Text
+//   productPrice       Float  @db.Real
+//   productDescription String @db.Text
+// }
+
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
@@ -7,12 +28,88 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = "postgresql://postgres:superuser@localhost:5432/document-ai-db?schema=public"
 }
 
-model Products {
-  id                 Int    @id @default(autoincrement()) @db.SmallInt
-  productName        String @db.Text
-  productPrice       Float  @db.Real
-  productDescription String @db.Text
+// Document AI
+
+model StatusType {
+  type_id   Int       @id @default(autoincrement()) @db.SmallInt
+  type_name String    @unique @db.VarChar(64)
+  Invoice   Invoice[]
+}
+
+model Invoice {
+  invoice_id        Int              @id @default(autoincrement())
+  status_type_id    Int              @db.SmallInt
+  status_type       StatusType       @relation(fields: [status_type_id], references: [type_id])
+  ref_doctype_id    Int              @db.SmallInt
+  document_type     DocumentType     @relation(fields: [ref_doctype_id], references: [doctype_id])
+  invoice_url       String           @db.Text
+  invoice_date      DateTime         @default(now()) @db.Timestamptz(6)
+  invoice_file_name String           @db.Text
+  InvoiceJson       InvoiceJson[]
+  InvoiceUnified    InvoiceUnified[]
+}
+
+model InvoiceJson {
+  json_id        Int           @id @default(autoincrement())
+  ref_invoice_id Int           @db.Integer
+  invoice        Invoice       @relation(fields: [ref_invoice_id], references: [invoice_id], onDelete: Cascade)
+  ref_parser_id  Int           @db.Integer
+  invoiceParser  InvoiceParser @relation(fields: [ref_parser_id], references: [parser_id])
+  json_content   Json          @db.Json
+}
+
+model InvoiceAttribute {
+  attribute_id   Int      @id @default(autoincrement()) @db.SmallInt
+  attribute_name String   @unique @db.VarChar(64)
+  Fields         Fields[]
+}
+
+model InvoiceUnified {
+  invoice_id      Int     @id @default(autoincrement())
+  ref_invoice_id  Int     @db.Integer
+  invoice         Invoice @relation(fields: [ref_invoice_id], references: [invoice_id], onDelete: Cascade)
+  invoice_content Json    @db.Json
+}
+
+model InvoiceParser {
+  parser_id   Int           @id @default(autoincrement()) @db.SmallInt
+  parser_name String        @unique @db.VarChar(64)
+  InvoiceJson InvoiceJson[]
+}
+
+model DocumentType {
+  doctype_id   Int        @id @default(autoincrement()) @db.SmallInt
+  doctype_name String     @unique @db.VarChar(64)
+  Invoice      Invoice[]
+  Settings     Settings[]
+}
+
+model Fields {
+  field_id         Int              @id @default(autoincrement())
+  field_name       String           @db.Text
+  ref_attribute_id Int              @db.Integer
+  attribute        InvoiceAttribute @relation(fields: [ref_attribute_id], references: [attribute_id])
+  Settings         Settings[]
+}
+
+model Settings {
+  settings_id              Int                    @id @default(autoincrement())
+  ref_doctype_id           Int                    @db.Integer
+  document_type            DocumentType           @relation(fields: [ref_doctype_id], references: [doctype_id])
+  ref_field_id             Int                    @db.Integer
+  fields                   Fields                 @relation(fields: [ref_field_id], references: [field_id])
+  azure_field              String                 @db.Text
+  google_field             String                 @db.Text
+  ref_version_id           Int                    @db.Integer
+  google_processor_version GoogleProcessorVersion @relation(fields: [ref_version_id], references: [version_id])
+}
+
+model GoogleProcessorVersion {
+  version_id         Int        @id @default(autoincrement()) @db.SmallInt
+  version_short_name String     @unique @db.VarChar(64)
+  version_full_name  String     @unique @db.VarChar(64)
+  Settings           Settings[]
 }
